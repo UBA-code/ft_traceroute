@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:48:28 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/06 09:21:08 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:47:57 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 #include <time.h>
 #include <arpa/inet.h>
 #include <netinet/udp.h>
-#include <sys/select.h>
 
 #define ICMP_REQUEST_LEN 64
 #define ICMP_REPLY_LEN 84
@@ -58,7 +57,6 @@ typedef struct s_traceroute
   int ttl;
   struct addrinfo *results;
   int currentPort;
-  fd_set readFds;
 } traceroute;
 
 #ifndef PING_STRUCT

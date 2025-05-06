@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:57:02 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/06 10:35:13 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/06 10:49:18 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ bool receivePacket(int sockFd, struct timeval sendTime, bool isFirstPacket)
   bzero(&buffer, sizeof(buffer));
 
   bytesReceived = recvfrom(sockFd, buffer, sizeof(buffer), 0, traceroute_struct->results->ai_addr, &traceroute_struct->results->ai_addrlen);
+
+  resolveHostName(traceroute_struct->host, &traceroute_struct->results, "udp");
 
   if (gettimeofday(&replyTime, 0))
     ft_error(1, "gettimeofday: ", true);
@@ -61,6 +63,11 @@ bool receivePacket(int sockFd, struct timeval sendTime, bool isFirstPacket)
       printf("%0.2fms  ", (replyTime.tv_sec - sendTime.tv_sec) * 1000.0 + (replyTime.tv_usec - sendTime.tv_usec) / 1000.0);
       return true;
     }
+  }
+  else
+  {
+    write(1, "*", 1);
+    write(1, " ", 1);
   }
   return false;
 }
