@@ -6,11 +6,11 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:49:00 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/03 17:20:45 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/06 09:21:08 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/ft_traceroute.h"
+#include "ft_traceroute.h"
 
 traceroute *traceroute_struct;
 
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
   initializer();
   argumentsParser(argc, argv);
 
-  getDestIp(traceroute_struct->host, &traceroute_struct->results);
+  resolveHostName(traceroute_struct->host, &traceroute_struct->results, "udp");
 
   if (traceroute_struct->options.usageIsSpecified)
     printUsage(); //* Print usage, free resources and exit
@@ -30,16 +30,30 @@ int main(int argc, char *argv[])
   return 0;
 }
 
-void getDestIp(char *host, struct addrinfo **results)
+void resolveHostName(char *host, struct addrinfo **results, const char *type)
 {
   //* get the ip addr of host
   struct addrinfo hints;
 
   bzero(&hints, sizeof(hints));
-  hints.ai_family = AF_INET;
-  hints.ai_protocol = IPPROTO_ICMP;
-  hints.ai_socktype = SOCK_RAW;
-
-  if (getaddrinfo(host, NULL, &hints, results))
-    ft_error(1, "getaddrinfo: ", true);
+  if (results && *results)
+    freeaddrinfo(*results);
+  if (!strcmp("udp", type))
+  {
+    hints.ai_family = AF_INET;
+    hints.ai_protocol = IPPROTO_UDP;
+    hints.ai_socktype = SOCK_DGRAM;
+    char *port = ft_itoa(traceroute_struct->currentPort);
+    if (getaddrinfo(host, port, &hints, results))
+      ft_error(1, "getaddrinfo: ", true);
+    free(port);
+  }
+  else if (!strcmp("icmp", type))
+  {
+    hints.ai_family = AF_INET;
+    hints.ai_protocol = IPPROTO_ICMP;
+    hints.ai_socktype = SOCK_RAW;
+    if (getaddrinfo(host, NULL, &hints, results))
+      ft_error(1, "getaddrinfo: ", true);
+  }
 }

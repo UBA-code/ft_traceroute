@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:48:28 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/03 18:58:49 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/06 09:21:08 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,17 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <sys/time.h>
+#include <time.h>
 #include <arpa/inet.h>
+#include <netinet/udp.h>
+#include <sys/select.h>
 
 #define ICMP_REQUEST_LEN 64
 #define ICMP_REPLY_LEN 84
 #define IP_HEADER_SIZE 20
+#define UDP_PACKET_SIZE 8
 #define MAX_TTL 64
+#define BASE_PORT 33434
 
 typedef struct s_options
 {
@@ -44,26 +49,37 @@ typedef struct s_options
 typedef struct s_traceroute
 {
   char *host;
-  int socket;
+  int sendSocket;
+  int receiveSocket;
   struct icmp icmpHeader;
+  struct ip ipHeader;
+  struct udphdr udpHeader;
   t_options options;
   int ttl;
   struct addrinfo *results;
+  int currentPort;
+  fd_set readFds;
 } traceroute;
 
 #ifndef PING_STRUCT
 extern traceroute *traceroute_struct;
 #endif
 
-void getDestIp(char *host, struct addrinfo **results);
+void resolveHostName(char *host, struct addrinfo **results, const char *type);
 void printUsage();
 void ft_error_printf(int errCode, char *format, ...);
 void ft_error(int code, char *msg, bool readErrno);
 void freeResources();
 void argumentsParser(int argc, char **args);
 void initializer();
-uint16_t calcCksum(struct icmp *icmpHeader, int len);
-bool receivePacket(int sockFd, struct timeval sendTime, char *destIp);
+uint16_t calcCksum(void *icmpHeader, int len);
+bool receivePacket(int sockFd, struct timeval sendTime, bool isFirstPacket);
 struct timeval sendPacket(int sockfd, void *data, struct addrinfo *addr, int ttl);
 void pinger();
+char *ft_itoa(int n);
+void initUdpPacket(struct udphdr *udpHeader);
+void ft_putNumber(int n);
+void ft_putchar(char c);
+void ft_putstr(const char *str);
+
 #endif

@@ -1,30 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_putNumber.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 17:08:56 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/05 11:36:18 by ybel-hac         ###   ########.fr       */
+/*   Created: 2025/05/05 18:33:53 by ybel-hac          #+#    #+#             */
+/*   Updated: 2025/05/05 18:51:41 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_traceroute.h"
 
-void ft_error(int code, char *msg, bool readErrno)
+void ft_putNumber(int n)
 {
-  if (readErrno)
+  if (n == -2147483648)
   {
-    char *errorMsg = strerror(errno);
-    fprintf(stderr, "ft_traceroute: %s\n", errorMsg);
-    printf("probably leak here\n");
-    // free(errorMsg);
+    ft_putchar('-');
+    ft_putchar('2');
+    ft_putNumber(147483648);
+  }
+  else if (n > 9)
+  {
+    ft_putNumber(n / 10);
+    ft_putchar(n % 10 + '0');
+  }
+  else if (n < 0)
+  {
+    ft_putchar('-');
+    n = -n;
+    ft_putNumber(n);
   }
   else
+    ft_putchar(n + '0');
+}
+
+void ft_putchar(char c)
+{
+  write(1, &c, 1);
+}
+
+void ft_putstr(const char *str)
+{
+  while (*str)
   {
-    fprintf(stderr, "ft_traceroute: %s\n", msg);
+    write(1, str, 1);
+    str++;
   }
-  freeResources();
-  exit(code);
 }

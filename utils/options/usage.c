@@ -6,11 +6,11 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 17:05:50 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/02 08:47:44 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:36:18 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/ft_traceroute.h"
+#include "ft_traceroute.h"
 
 //* Print usage and exit
 void printUsage()

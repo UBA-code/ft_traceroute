@@ -6,11 +6,11 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:47:44 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/02 16:49:29 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:36:18 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/ft_traceroute.h"
+#include "ft_traceroute.h"
 
 int isSupportedArgument(char arg)
 {
@@ -31,7 +31,7 @@ long long numValidator(char *num)
     if ((!isdigit(num[i]) && num[i] != '+' && num[i] != '-') ||
         signsCount > 1)
     {
-      ft_error_printf(1, "ft_ping: invalid value (`%s' near `%s')\n", num, num);
+      ft_error_printf(1, "ft_traceroute: invalid value (`%s' near `%s')\n", num, num);
     }
     if (num[i] == '-')
       sign = -1;
@@ -79,7 +79,7 @@ void setSpecifiedOptions(char *arg, char ***arguments)
       //         else
       //         {
       //           ft_error_printf(1, "ft_ping: option requires an argument -- '%c'\n
-// Try 'ft_ping -?' for more information.\n",
+      // Try 'ft_ping -?' for more information.\n",
       //                           *arg);
       //         }
       //         // * skip the packets count argument for the next loop
@@ -143,7 +143,7 @@ Try 'traceroute --help' for more information.\n",
   {
     ft_error(64, "\
 missing host operand\n\
-Try 'ft_ping -?' for more information.",
+Try 'ft_traceroute -?' for more information.",
              false);
   }
 }
