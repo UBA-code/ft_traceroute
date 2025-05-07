@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:48:28 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/06 10:47:57 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:33:11 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_traceroute
   int receiveSocket;
   struct icmp icmpHeader;
   struct ip ipHeader;
-  struct udphdr udpHeader;
   t_options options;
   int ttl;
   struct addrinfo *results;
@@ -71,11 +70,10 @@ void freeResources();
 void argumentsParser(int argc, char **args);
 void initializer();
 uint16_t calcCksum(void *icmpHeader, int len);
-bool receivePacket(int sockFd, struct timeval sendTime, bool isFirstPacket);
-struct timeval sendPacket(int sockfd, void *data, struct addrinfo *addr, int ttl);
+struct timeval sendPacket(int sockfd, struct addrinfo *addr, int ttl);
+bool receivePacket(int sockFd, struct timeval sendTime, bool *isHopIpAlreadyPrinted);
 void pinger();
 char *ft_itoa(int n);
-void initUdpPacket(struct udphdr *udpHeader);
 void ft_putNumber(int n);
 void ft_putchar(char c);
 void ft_putstr(const char *str);

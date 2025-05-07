@@ -12,7 +12,6 @@ SRC=ft_traceroute.c \
 	$(UTILS_FLDR)/pinger/pinger.c \
 	$(UTILS_FLDR)/pinger/sendPacket.c \
 	$(UTILS_FLDR)/pinger/receivePacket.c \
-	$(UTILS_FLDR)/pinger/initUdpPacket.c \
 	# $(UTILS_FLDR)/utils2.c
 OBJ=$(SRC:.c=.o)
 INC=./includes
