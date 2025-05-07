@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   printEmptyProbes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 17:08:56 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 10:12:30 by ybel-hac         ###   ########.fr       */
+/*   Created: 2025/05/07 11:54:15 by ybel-hac          #+#    #+#             */
+/*   Updated: 2025/05/07 11:55:15 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_traceroute.h"
 
-void ft_error(int code, char *msg, bool readErrno)
+void printEmptyProbes(int maxTTL, int probes)
 {
-  if (readErrno)
+  for (int i = 0; i < maxTTL; i++)
   {
-    char *errorMsg = strerror(errno);
-    fprintf(stderr, "ft_traceroute: %s\n", errorMsg);
+    printf("  %d   ", i + 1);
+    for (int j = 0; j < probes; j++)
+      printf(" * ");
+    printf("\n");
   }
-  else
-  {
-    fprintf(stderr, "ft_traceroute: %s\n", msg);
-  }
-  freeResources();
-  exit(code);
 }

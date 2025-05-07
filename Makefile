@@ -9,6 +9,7 @@ SRC=ft_traceroute.c \
 	$(UTILS_FLDR)/helpers/initializer.c \
 	$(UTILS_FLDR)/helpers/ft_itoa.c \
 	$(UTILS_FLDR)/helpers/ft_putNumber.c \
+	$(UTILS_FLDR)/helpers/printEmptyProbes.c \
 	$(UTILS_FLDR)/pinger/pinger.c \
 	$(UTILS_FLDR)/pinger/sendPacket.c \
 	$(UTILS_FLDR)/pinger/receivePacket.c \

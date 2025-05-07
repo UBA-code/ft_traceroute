@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:48:28 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 09:33:11 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:00:18 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,23 @@
 #include <arpa/inet.h>
 #include <netinet/udp.h>
 
+#define DEFAULT_PROBES 3
 #define ICMP_REQUEST_LEN 64
 #define ICMP_REPLY_LEN 84
 #define IP_HEADER_SIZE 20
 #define UDP_PACKET_SIZE 8
 #define MAX_TTL 64
 #define BASE_PORT 33434
+#define MAX_WAIT_TIME 3
+#define INITIAL_TTL 1
 
 typedef struct s_options
 {
   bool usageIsSpecified;
+  int maxHops;
+  int currentPort;
+  int probePackets;
+  int waitTime;
 } t_options;
 
 typedef struct s_traceroute
@@ -55,7 +62,6 @@ typedef struct s_traceroute
   t_options options;
   int ttl;
   struct addrinfo *results;
-  int currentPort;
 } traceroute;
 
 #ifndef PING_STRUCT
@@ -77,5 +83,7 @@ char *ft_itoa(int n);
 void ft_putNumber(int n);
 void ft_putchar(char c);
 void ft_putstr(const char *str);
+void checkAndSetOptionAmount(char arg, char *value);
+void printEmptyProbes(int maxTTL, int probes);
 
 #endif

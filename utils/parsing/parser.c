@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:47:44 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/05 11:36:18 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:23:34 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int isSupportedArgument(char arg)
 {
-  return (arg == '?');
-  // return (arg != 'v' && arg != '?' && arg != 'c' && arg != 'q' && arg != 'd' && arg != 'W' && arg != 'w');
+  return (arg == '?' || arg == 'm' || arg == 'p' || arg == 'q' || arg == 'w' || arg == 'f');
 }
 
 long long numValidator(char *num)
@@ -48,44 +47,56 @@ void setSpecifiedOptions(char *arg, char ***arguments)
   (void)argv;
   while (*arg)
   {
+    if (!isSupportedArgument(*arg))
+    {
+      ft_error_printf(64, "ft_traceroute: invalid option -- '%c'\n\
+  Try 'traceroute -?' for more information.\n",
+                      *arg);
+    }
     switch (*arg)
     {
-      //     case 'v':
-      //       traceroute_struct->options.verboseIsSpecified = true;
-      //       break;
     case '?':
       traceroute_struct->options.usageIsSpecified = true;
       break;
-      //     case 'q':
-      //       traceroute_struct->options.quitModeIsSpecified = true;
-      //       break;
-      //     case 'd':
-      //       traceroute_struct->options.debugModeIsSpecified = true;
-      //       break;
-      //     case 'w':
-      //     case 'c':
-      //     case 'W':
-      //       if (*(arg + 1))
-      //       {
-      //         if (!isdigit(*(arg + 1)) && *(arg + 1) != '+' && *(arg + 1) != '-')
-      //           ft_error_printf(1, "ft_ping: invalid value (`%s' near `%s')\n", arg + 1, arg + 1);
-      //         checkAndSetOptionAmount(*arg, arg + 1);
-      //         return;
-      //       }
-      //       else
-      //       {
-      //         if (*(argv + 1) && argv++)
-      //           checkAndSetOptionAmount(*arg, *argv);
-      //         else
-      //         {
-      //           ft_error_printf(1, "ft_ping: option requires an argument -- '%c'\n
-      // Try 'ft_ping -?' for more information.\n",
-      //                           *arg);
-      //         }
-      //         // * skip the packets count argument for the next loop
-      //         (*arguments)++;
-      //       }
-      //       break;
+    case 'f':
+    case 'm':
+    case 'p':
+    case 'q':
+    case 'w':
+      if (*(arg + 1))
+      {
+        if (!isdigit(*(arg + 1)) && *(arg + 1) != '+' && *(arg + 1) != '-')
+        {
+          if (*arg == 'm')
+            ft_error_printf(1, "ft_traceroute: invalid hops value `%s'\n", arg + 1);
+          else if (*arg == 'p')
+            ft_error_printf(1, "ft_traceroute: invalid port number `%s'\n", arg + 1);
+          else if (*arg == 'q')
+            ft_error_printf(1, "traceroute: invalid value (`%s' near `%s')\n\
+Try 'traceroute --help' or 'traceroute --usage' for more information.",
+                            arg + 1, arg + 1);
+        }
+        if (*arg == 'w' && !isdigit(*(arg + 1)))
+          ft_error_printf(1, "traceroute: ridiculous waiting time `%s'\n", arg + 1);
+        if (*arg == 'f' && !isdigit(*(arg + 1)))
+          ft_error_printf(1, "traceroute: impossible distance `%s'\n", arg + 1);
+        checkAndSetOptionAmount(*arg, arg + 1);
+        return;
+      }
+      else
+      {
+        if (*(argv + 1) && argv++)
+          checkAndSetOptionAmount(*arg, *argv);
+        else
+        {
+          ft_error_printf(1, "ft_traceroute: option requires an argument -- '%c'\n\
+Try 'ft_traceroute -?' for more information.\n",
+                          *arg);
+        }
+        // * skip the packets count argument for the next loop
+        (*arguments)++;
+      }
+      break;
     default:
       ft_error_printf(64, "ft_traceroute: invalid option -- '%c'\n\
 Try 'ping -?' for more information.\n",
@@ -148,32 +159,34 @@ Try 'ft_traceroute -?' for more information.",
   }
 }
 
-// void checkAndSetOptionAmount(char arg, char *value)
-// {
-//   if (arg == 'c')
-//     traceroute_struct->options.countAmount = numValidator(value);
-//   else if (arg == 'W')
-//     traceroute_struct->options.timeOutAmount = numValidator(value);
-//   else
-//     traceroute_struct->options.stopAfterAmount = numValidator(value);
-//   if (arg == 'c' && traceroute_struct->options.countAmount > 0)
-//     traceroute_struct->options.countIsSpecified = true;
-//   else if (arg == 'W' && IS_VALID_RANGE(traceroute_struct->options.timeOutAmount))
-//     traceroute_struct->options.timeOutIsSpecified = true;
-//   else if (arg == 'w' && IS_VALID_RANGE(traceroute_struct->options.stopAfterAmount))
-//     traceroute_struct->options.stopAfterIsSpecified = true;
-
-//   if (arg == 'W' && (!IS_VALID_RANGE(traceroute_struct->options.timeOutAmount)))
-//   {
-//     if (traceroute_struct->options.timeOutAmount == 0)
-//       ft_error_printf(1, "ft_ping: option value too small: %s\n", value);
-//     ft_error_printf(1, "ft_ping: option value too big: %s\n", value);
-//   }
-
-//   if (arg == 'w' && (!IS_VALID_RANGE(traceroute_struct->options.stopAfterAmount)))
-//   {
-//     if (traceroute_struct->options.stopAfterAmount == 0)
-//       ft_error_printf(1, "ft_ping: option value too small: %s\n", value);
-//     ft_error_printf(1, "ft_ping: option value too big: %s\n", value);
-//   }
-// }
+void checkAndSetOptionAmount(char arg, char *value)
+{
+  switch (arg)
+  {
+  case 'f':
+    traceroute_struct->ttl = numValidator(value);
+    if (traceroute_struct->ttl <= 0 || traceroute_struct->ttl > 255)
+      ft_error_printf(1, "ft_traceroute: impossible distance `%s'\n", value);
+    break;
+  case 'm':
+    traceroute_struct->options.maxHops = numValidator(value);
+    if (traceroute_struct->options.maxHops <= 0 || traceroute_struct->options.maxHops > 255)
+      ft_error_printf(1, "ft_traceroute: invalid hops value `%s'\n", value);
+    break;
+  case 'p':
+    traceroute_struct->options.currentPort = numValidator(value);
+    if (traceroute_struct->options.currentPort <= 0 || traceroute_struct->options.currentPort > 65536)
+      ft_error_printf(1, "ft_traceroute: invalid port number `%s'\n", value);
+    break;
+  case 'q':
+    traceroute_struct->options.probePackets = numValidator(value);
+    if (traceroute_struct->options.probePackets <= 0 || traceroute_struct->options.probePackets > 10)
+      ft_error_printf(1, "ft_traceroute: number of tries should be between 1 and 10\n");
+    break;
+  case 'w':
+    traceroute_struct->options.waitTime = numValidator(value);
+    if (traceroute_struct->options.waitTime < 0 || traceroute_struct->options.waitTime > 60)
+      ft_error_printf(1, "ft_traceroute: ridiculous waiting time `%s'\n", value);
+    break;
+  }
+}

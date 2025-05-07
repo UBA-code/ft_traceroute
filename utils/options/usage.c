@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 17:05:50 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/05 11:36:18 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/07 11:59:39 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void printUsage()
   printf("Usage: ft_traceroute [OPTION...] HOST\n");
   printf("Print the route packets trace to network host.\n");
   printf("\n");
-  // printf("-c\tstop after sending <count> packets\n");
-  // printf("-d\tset the SO_DEBUG option\n");
-  // printf("-v\tverbose output\n");
-  // printf("-w\tstop after N seconds\n");
-  // printf("-W\tnumber of seconds to wait for response\n");
+  printf("-f\tset initial hop distance, i.e., time-to-live\n");
+  printf("-m\tset maximal hop count (default: 64)\n");
+  printf("-p\tuse destination PORT port (default: 33434)\n");
+  printf("-q\tsend NUM probe packets per hop (default: 3)\n");
+  printf("-w\twait NUM seconds for response (default: 3)\n");
   // printf("-q\tquiet output\n");
   // printf("\n");
   printf("-?, --help\tgive this help list\n");

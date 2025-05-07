@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:49:00 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/06 09:21:08 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:21:51 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void resolveHostName(char *host, struct addrinfo **results, const char *type)
     hints.ai_family = AF_INET;
     hints.ai_protocol = IPPROTO_UDP;
     hints.ai_socktype = SOCK_DGRAM;
-    char *port = ft_itoa(traceroute_struct->currentPort);
+    char *port = ft_itoa(traceroute_struct->options.currentPort);
     if (getaddrinfo(host, port, &hints, results))
       ft_error(1, "getaddrinfo: ", true);
     free(port);
