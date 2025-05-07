@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:47:44 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 12:23:34 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:32:02 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void argumentsParser(int argc, char **args)
   if (argc < 2)
   {
     ft_error(64, "\
-traceroute: missing host operand\n\
+missing host operand\n\
 Try 'traceroute --help' or 'traceroute --usage' for more information.",
              false);
   }

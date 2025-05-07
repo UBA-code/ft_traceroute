@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:48:28 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 12:00:18 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:33:24 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 #include <time.h>
 #include <arpa/inet.h>
 #include <netinet/udp.h>
+#include <signal.h>
 
 #define DEFAULT_PROBES 3
 #define ICMP_REQUEST_LEN 64
@@ -85,5 +86,7 @@ void ft_putchar(char c);
 void ft_putstr(const char *str);
 void checkAndSetOptionAmount(char arg, char *value);
 void printEmptyProbes(int maxTTL, int probes);
+void resolveHostName(char *host, struct addrinfo **results, const char *type);
+
 
 #endif

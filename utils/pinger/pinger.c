@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 09:46:42 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 12:08:55 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:55:24 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,21 @@ void pinger()
     freeResources();
     exit(1);
   }
-  while (!targetReached && (traceroute_struct->ttl <= traceroute_struct->options.maxHops || traceroute_struct->ttl > traceroute_struct->options.maxHops))
-  {
+  do {
     printf("  %d   ", i);
     for (int i = 0; i < traceroute_struct->options.probePackets; i++)
     {
       sendTime = sendPacket(traceroute_struct->sendSocket, traceroute_struct->results, traceroute_struct->ttl);
-
+      
       targetReached = receivePacket(traceroute_struct->receiveSocket, sendTime, &hopIpAlreadyPrinted);
-
+      
       resolveHostName(traceroute_struct->host, &traceroute_struct->results, "udp");
-
-      usleep(100);
     }
     hopIpAlreadyPrinted = false;
     printf("\n");
     traceroute_struct->ttl++;
     i++;
   }
+  while (!targetReached && (traceroute_struct->ttl <= traceroute_struct->options.maxHops));
+  freeResources();
 }

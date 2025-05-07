@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 08:53:41 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 12:00:22 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:32:54 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void initializer()
   traceroute_struct->receiveSocket = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
   if (traceroute_struct->sendSocket < 0 || traceroute_struct->receiveSocket < 0)
     ft_error(1, "Socket creation failed", false);
+
+  traceroute_struct->results = NULL;
 
   //* set default options values
   traceroute_struct->options.currentPort = BASE_PORT;
