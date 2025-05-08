@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 09:46:42 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 16:55:24 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/08 10:11:58 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void pinger()
     exit(1);
   }
   do {
-    printf("  %d   ", i);
+    printf("%3d   ", i);
     for (int i = 0; i < traceroute_struct->options.probePackets; i++)
     {
       sendTime = sendPacket(traceroute_struct->sendSocket, traceroute_struct->results, traceroute_struct->ttl);

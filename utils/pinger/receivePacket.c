@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:57:02 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 09:34:35 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/08 10:24:43 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,20 @@ bool receivePacket(int sockFd, struct timeval sendTime, bool *isHopIpAlreadyPrin
     {
       if (!(*isHopIpAlreadyPrinted))
       {
-        printf("%s  ", hopIp);
+        printf("%-15s  ", hopIp);
         *isHopIpAlreadyPrinted = true;
       }
-      printf("%0.2fms  ", (replyTime.tv_sec - sendTime.tv_sec) * 1000.0 + (replyTime.tv_usec - sendTime.tv_usec) / 1000.0);
+      printf("%.2fms  ", (replyTime.tv_sec - sendTime.tv_sec) * 1000.0 + (replyTime.tv_usec - sendTime.tv_usec) / 1000.0);
       return false;
     }
     else if (icmpHeader->icmp_type == ICMP_UNREACH && icmpHeader->icmp_code == ICMP_UNREACH_PORT && isValidCksum)
     {
       if (!(*isHopIpAlreadyPrinted))
       {
-        printf("%s  ", hopIp);
+        printf("%-15s  ", hopIp);
         *isHopIpAlreadyPrinted = true;
       }
-      printf("%0.2fms  ", (replyTime.tv_sec - sendTime.tv_sec) * 1000.0 + (replyTime.tv_usec - sendTime.tv_usec) / 1000.0);
+      printf("%.2fms  ", (replyTime.tv_sec - sendTime.tv_sec) * 1000.0 + (replyTime.tv_usec - sendTime.tv_usec) / 1000.0);
       return true;
     }
   }
