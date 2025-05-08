@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:49:00 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 16:40:15 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/08 09:28:41 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ traceroute *traceroute_struct;
 void signalHandler(int signum)
 {
   (void)signum;
+  printf("\n");
   freeResources();
   exit(130);
 }
