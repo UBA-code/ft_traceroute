@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:48:28 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/12 10:21:54 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:31:23 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 #define UDP_PACKET_SIZE 8
 #define MAX_TTL 30
 #define BASE_PORT 33434
-#define MAX_WAIT_TIME 5
+#define DEFAULT_WAIT_TIME 5
 #define INITIAL_TTL 1
 #define MAX_PROBES_SIMULTANEOUS 16
 
@@ -82,6 +82,7 @@ typedef struct s_probe
   int ttl;
   int port;
   int seq;
+  bool lastReachedProbe;
   t_probe *next;
 } t_probe;
 
@@ -109,7 +110,7 @@ void printEmptyProbes(int maxTTL, int probes);
 t_probe *addProbe(t_probe **head, int ttl, int port, int probeSeq);
 t_probe *deleteProbe(t_probe **head, int port);
 void freeProbes(t_probe **head);
-void handleReceivedProbe(t_probe *head, struct timeval receiveTime, char *ip, int port);
+void handleReceivedProbe(t_probe *head, struct timeval receiveTime, char *ip, int port, bool targetReached);
 void printList(t_probe *head);
 void handleTimeOutedProbes(t_probe *head);
 

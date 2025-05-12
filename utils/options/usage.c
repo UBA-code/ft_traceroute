@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 17:05:50 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 11:59:39 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:31:23 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void printUsage()
   printf("Print the route packets trace to network host.\n");
   printf("\n");
   printf("-f\tset initial hop distance, i.e., time-to-live\n");
-  printf("-m\tset maximal hop count (default: 64)\n");
-  printf("-p\tuse destination PORT port (default: 33434)\n");
-  printf("-q\tsend NUM probe packets per hop (default: 3)\n");
-  printf("-w\twait NUM seconds for response (default: 3)\n");
+  printf("-m\tset maximal hop count (default: %d)\n", MAX_TTL);
+  printf("-p\tuse destination PORT port (default: %d)\n", BASE_PORT);
+  printf("-q\tsend NUM probe packets per hop (default: %d)\n", DEFAULT_PROBES);
+  printf("-w\twait NUM seconds for response (default: %d)\n", DEFAULT_WAIT_TIME);
   // printf("-q\tquiet output\n");
   // printf("\n");
   printf("-?, --help\tgive this help list\n");

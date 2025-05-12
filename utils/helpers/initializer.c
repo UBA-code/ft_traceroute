@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 08:53:41 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/12 10:22:15 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:31:23 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void initializer()
   traceroute_struct->options.maxHops = MAX_TTL;
   traceroute_struct->options.maxProbes = DEFAULT_PROBES;
   traceroute_struct->options.usageIsSpecified = false;
-  traceroute_struct->options.waitTime = MAX_WAIT_TIME;
+  traceroute_struct->options.waitTime = DEFAULT_WAIT_TIME;
 
   traceroute_struct->probes = NULL;
   traceroute_struct->probeCount = 0;

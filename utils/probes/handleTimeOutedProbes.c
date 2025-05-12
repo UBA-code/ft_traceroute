@@ -30,13 +30,12 @@ void handleTimeOutedProbes(t_probe *head)
       {
         if (currentProbe->seq == 1)
           printf("%2d  * ", currentProbe->ttl);
-        else if (currentProbe->seq == 2)
+        else if (currentProbe->seq > 1 && currentProbe->seq < traceroute_struct->options.maxProbes)
           printf("* ");
-        else
-        {
+        else if (currentProbe->seq == traceroute_struct->options.maxProbes)
           printf("*");
+        if (currentProbe->seq == traceroute_struct->options.maxProbes)
           printf("\n");
-        }
         currentProbe = deleteProbe(&traceroute_struct->probes, currentProbe->port);
         continue;
       }

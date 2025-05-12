@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:57:02 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/10 12:36:42 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:00:55 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void receivePacket(int sockFd)
 
     if (icmpHeader->icmp_type == ICMP_TIMXCEED && icmpHeader->icmp_code == ICMP_TIMXCEED_INTRANS && !strcmp(inet_ntoa(ipHeader->ip_dst), traceroute_struct->host) == 0)
     {
-      handleReceivedProbe(traceroute_struct->probes, replyTime, hopIp, ntohs(udpHeader->uh_dport));
+      handleReceivedProbe(traceroute_struct->probes, replyTime, hopIp, ntohs(udpHeader->uh_dport), false);
     }
     else if (icmpHeader->icmp_type == ICMP_UNREACH && icmpHeader->icmp_code == ICMP_UNREACH_PORT && isValidCksum)
     {
-      handleReceivedProbe(traceroute_struct->probes, replyTime, hopIp, ntohs(udpHeader->uh_dport));
+      handleReceivedProbe(traceroute_struct->probes, replyTime, hopIp, ntohs(udpHeader->uh_dport), true);
       traceroute_struct->targetReached = true;
     }
   }

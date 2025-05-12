@@ -6,13 +6,13 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:36:42 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/12 08:26:20 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:17:37 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_traceroute.h"
 
-void handleReceivedProbe(t_probe *head, struct timeval receiveTime, char *ip, int port)
+void handleReceivedProbe(t_probe *head, struct timeval receiveTime, char *ip, int port, bool targetReached)
 {
   t_probe *currentProbe = head;
   bool shouldPrint = true;
@@ -24,6 +24,10 @@ void handleReceivedProbe(t_probe *head, struct timeval receiveTime, char *ip, in
     {
       strncpy(currentProbe->ip, ip, INET_ADDRSTRLEN);
       currentProbe->recvTime = receiveTime;
+      if (currentProbe->seq == traceroute_struct->options.maxProbes && targetReached)
+      {
+        currentProbe->lastReachedProbe = targetReached;
+      }
     }
     if (currentProbe->recvTime.tv_sec && shouldPrint)
     {
@@ -42,15 +46,15 @@ void handleReceivedProbe(t_probe *head, struct timeval receiveTime, char *ip, in
       }
       else
         printf(" * ");
-      if (currentProbe->seq == 3)
+      if (currentProbe->seq == traceroute_struct->options.maxProbes)
         printf("\n");
-      currentProbe = deleteProbe(&traceroute_struct->probes, currentProbe->port);
 
-      if (traceroute_struct->targetReached && traceroute_struct->probeCount == 0 && traceroute_struct->totalProbesSent % 3 == 0)
+      if (traceroute_struct->targetReached && currentProbe->lastReachedProbe)
       {
         freeResources();
         exit(0);
       }
+      currentProbe = deleteProbe(&traceroute_struct->probes, currentProbe->port);
       continue;
     }
     else

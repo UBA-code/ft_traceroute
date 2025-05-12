@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 09:46:42 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/12 10:24:23 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:33:10 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void pinger()
     //* send 3 probes for each ttl and ensure there is 16 packets in flight
     while ((traceroute_struct->probeCount < MAX_PROBES_SIMULTANEOUS && traceroute_struct->ttl <= traceroute_struct->options.maxHops && !traceroute_struct->targetReached) ||
            !traceroute_struct->totalProbesSent ||
-           (traceroute_struct->targetReached && traceroute_struct->totalProbesSent % 3 != 0))
+           (traceroute_struct->targetReached && traceroute_struct->totalProbesSent % traceroute_struct->options.maxProbes != 0))
     {
       resolveHostName(traceroute_struct->dstIp, &traceroute_struct->results, "udp");
       sendPacket(traceroute_struct->sendSocket, traceroute_struct->results, traceroute_struct->ttl);
-      if ((traceroute_struct->totalProbesSent) % 3 == 0)
+      if ((traceroute_struct->totalProbesSent) % traceroute_struct->options.maxProbes == 0)
         traceroute_struct->ttl++;
     }
 

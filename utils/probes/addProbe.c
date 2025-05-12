@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 09:03:20 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/11 19:04:18 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:05:55 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_probe *addProbe(t_probe **head, int ttl, int port, int probeSeq)
   newProbe->ttl = ttl;
   newProbe->port = port;
   newProbe->seq = probeSeq;
+  newProbe->lastReachedProbe = false;
   newProbe->next = NULL;
   traceroute_struct->probeCount++;
   if (!current)
