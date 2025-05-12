@@ -1,0 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handleReceivedProbe.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/09 10:36:42 by ybel-hac          #+#    #+#             */
+/*   Updated: 2025/05/12 08:26:20 by ybel-hac         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_traceroute.h"
+
+void handleReceivedProbe(t_probe *head, struct timeval receiveTime, char *ip, int port)
+{
+  t_probe *currentProbe = head;
+  bool shouldPrint = true;
+
+  //* print all the probes that have been received, if there is a probe that has not been received yet, stop printing.
+  while (currentProbe != NULL)
+  {
+    if (currentProbe->port == port)
+    {
+      strncpy(currentProbe->ip, ip, INET_ADDRSTRLEN);
+      currentProbe->recvTime = receiveTime;
+    }
+    if (currentProbe->recvTime.tv_sec && shouldPrint)
+    {
+      float rtt = (currentProbe->recvTime.tv_sec - currentProbe->sendTime.tv_sec) * 1000.0 + (currentProbe->recvTime.tv_usec - currentProbe->sendTime.tv_usec) / 1000.0;
+
+      if (currentProbe->seq == 1)
+        printf("%2d  ", currentProbe->ttl);
+      if (rtt <= traceroute_struct->options.waitTime * 1000.0)
+      {
+        if (strcmp(currentProbe->ip, traceroute_struct->lastPrintedIp))
+        {
+          printf("%-15s  ", currentProbe->ip);
+          strcpy(traceroute_struct->lastPrintedIp, currentProbe->ip);
+        }
+        printf("%.2fms  ", rtt);
+      }
+      else
+        printf(" * ");
+      if (currentProbe->seq == 3)
+        printf("\n");
+      currentProbe = deleteProbe(&traceroute_struct->probes, currentProbe->port);
+
+      if (traceroute_struct->targetReached && traceroute_struct->probeCount == 0 && traceroute_struct->totalProbesSent % 3 == 0)
+      {
+        freeResources();
+        exit(0);
+      }
+      continue;
+    }
+    else
+    {
+      shouldPrint = false;
+    }
+    currentProbe = currentProbe->next;
+  }
+}

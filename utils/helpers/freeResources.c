@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 17:10:07 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/05 11:36:18 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/12 16:24:41 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void freeResources()
 {
   if (traceroute_struct)
   {
+    if (traceroute_struct->probes)
+      freeProbes(&traceroute_struct->probes);
     if (traceroute_struct->sendSocket != -1)
     {
       close(traceroute_struct->sendSocket);

@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:48:28 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 16:33:24 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/12 10:21:54 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,21 @@
 #define ICMP_REQUEST_LEN 64
 #define ICMP_REPLY_LEN 84
 #define IP_HEADER_SIZE 20
+#define ICMP_HEADER_SIZE 8
 #define UDP_PACKET_SIZE 8
-#define MAX_TTL 64
+#define MAX_TTL 30
 #define BASE_PORT 33434
-#define MAX_WAIT_TIME 3
+#define MAX_WAIT_TIME 5
 #define INITIAL_TTL 1
+#define MAX_PROBES_SIMULTANEOUS 16
 
+typedef struct s_probe t_probe;
 typedef struct s_options
 {
   bool usageIsSpecified;
   int maxHops;
   int currentPort;
-  int probePackets;
+  int maxProbes;
   int waitTime;
 } t_options;
 
@@ -63,7 +66,24 @@ typedef struct s_traceroute
   t_options options;
   int ttl;
   struct addrinfo *results;
+  t_probe *probes;
+  int probeCount;
+  bool targetReached;
+  char lastPrintedIp[INET_ADDRSTRLEN];
+  int totalProbesSent;
+  char dstIp[INET_ADDRSTRLEN];
 } traceroute;
+
+typedef struct s_probe
+{
+  struct timeval sendTime;
+  struct timeval recvTime;
+  char ip[INET_ADDRSTRLEN];
+  int ttl;
+  int port;
+  int seq;
+  t_probe *next;
+} t_probe;
 
 #ifndef PING_STRUCT
 extern traceroute *traceroute_struct;
@@ -78,7 +98,7 @@ void argumentsParser(int argc, char **args);
 void initializer();
 uint16_t calcCksum(void *icmpHeader, int len);
 struct timeval sendPacket(int sockfd, struct addrinfo *addr, int ttl);
-bool receivePacket(int sockFd, struct timeval sendTime, bool *isHopIpAlreadyPrinted);
+void receivePacket(int sockFd);
 void pinger();
 char *ft_itoa(int n);
 void ft_putNumber(int n);
@@ -86,7 +106,11 @@ void ft_putchar(char c);
 void ft_putstr(const char *str);
 void checkAndSetOptionAmount(char arg, char *value);
 void printEmptyProbes(int maxTTL, int probes);
-void resolveHostName(char *host, struct addrinfo **results, const char *type);
-
+t_probe *addProbe(t_probe **head, int ttl, int port, int probeSeq);
+t_probe *deleteProbe(t_probe **head, int port);
+void freeProbes(t_probe **head);
+void handleReceivedProbe(t_probe *head, struct timeval receiveTime, char *ip, int port);
+void printList(t_probe *head);
+void handleTimeOutedProbes(t_probe *head);
 
 #endif
