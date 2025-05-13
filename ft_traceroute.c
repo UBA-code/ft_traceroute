@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:49:00 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/10 12:12:24 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:27:34 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int main(int argc, char *argv[])
 
   signal(SIGINT, signalHandler);
 
-  resolveHostName(traceroute_struct->host, &traceroute_struct->results, "udp");
-
   if (traceroute_struct->options.usageIsSpecified)
     printUsage(); //* Print usage, free resources and exit
+
+  resolveHostName(traceroute_struct->host, &traceroute_struct->results, "udp");
 
   pinger();
   return 0;
