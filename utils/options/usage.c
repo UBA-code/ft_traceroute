@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 17:05:50 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/12 17:31:23 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:13:16 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void printUsage()
   printf("Usage: ft_traceroute [OPTION...] HOST\n");
   printf("Print the route packets trace to network host.\n");
   printf("\n");
+  printf("-d\Enable socket level debugging\n");
   printf("-f\tset initial hop distance, i.e., time-to-live\n");
   printf("-m\tset maximal hop count (default: %d)\n", MAX_TTL);
   printf("-p\tuse destination PORT port (default: %d)\n", BASE_PORT);
