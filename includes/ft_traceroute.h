@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:48:28 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/13 09:51:01 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:00:10 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ void freeProbes(t_probe **head);
 void handleReceivedProbe(t_probe *head, struct timeval receiveTime, char *ip, int port, bool targetReached);
 void printList(t_probe *head);
 void handleTimeOutedProbes(t_probe *head);
+char *ft_strncpy(char *dest, const char *src, size_t n);
 
 #endif

@@ -11,6 +11,7 @@ SRC=ft_traceroute.c \
 	$(UTILS_FLDR)/helpers/ft_putNumber.c \
 	$(UTILS_FLDR)/helpers/printEmptyProbes.c \
 	$(UTILS_FLDR)/helpers/resolveHostName.c \
+	$(UTILS_FLDR)/helpers/ft_strncpy.c \
 	$(UTILS_FLDR)/pinger/pinger.c \
 	$(UTILS_FLDR)/pinger/sendPacket.c \
 	$(UTILS_FLDR)/pinger/receivePacket.c \

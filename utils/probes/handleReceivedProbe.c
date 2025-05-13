@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:36:42 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/12 17:17:37 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:00:59 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void handleReceivedProbe(t_probe *head, struct timeval receiveTime, char *ip, in
   {
     if (currentProbe->port == port)
     {
-      strncpy(currentProbe->ip, ip, INET_ADDRSTRLEN);
+      ft_strncpy(currentProbe->ip, ip, INET_ADDRSTRLEN);
       currentProbe->recvTime = receiveTime;
       if (currentProbe->seq == traceroute_struct->options.maxProbes && targetReached)
       {
@@ -40,7 +40,7 @@ void handleReceivedProbe(t_probe *head, struct timeval receiveTime, char *ip, in
         if (strcmp(currentProbe->ip, traceroute_struct->lastPrintedIp))
         {
           printf("%-15s  ", currentProbe->ip);
-          strcpy(traceroute_struct->lastPrintedIp, currentProbe->ip);
+          ft_strncpy(traceroute_struct->lastPrintedIp, currentProbe->ip, INET_ADDRSTRLEN);
         }
         printf("%.2fms  ", rtt);
       }
