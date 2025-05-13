@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:47:44 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 17:32:02 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/13 09:51:27 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int isSupportedArgument(char arg)
 {
-  return (arg == '?' || arg == 'm' || arg == 'p' || arg == 'q' || arg == 'w' || arg == 'f');
+  return (arg == '?' || arg == 'm' || arg == 'p' || arg == 'q' || arg == 'w' || arg == 'f' || arg == 'd');
 }
 
 long long numValidator(char *num)
@@ -57,6 +57,9 @@ void setSpecifiedOptions(char *arg, char ***arguments)
     {
     case '?':
       traceroute_struct->options.usageIsSpecified = true;
+      break;
+    case 'd':
+      traceroute_struct->options.debugMode = true;
       break;
     case 'f':
     case 'm':
@@ -157,6 +160,8 @@ missing host operand\n\
 Try 'ft_traceroute -?' for more information.",
              false);
   }
+  if (traceroute_struct->options.maxHops < traceroute_struct->ttl)
+    ft_error(2, "first hop out of range", false);
 }
 
 void checkAndSetOptionAmount(char arg, char *value)
@@ -179,8 +184,8 @@ void checkAndSetOptionAmount(char arg, char *value)
       ft_error_printf(1, "ft_traceroute: invalid port number `%s'\n", value);
     break;
   case 'q':
-    traceroute_struct->options.probePackets = numValidator(value);
-    if (traceroute_struct->options.probePackets <= 0 || traceroute_struct->options.probePackets > 10)
+    traceroute_struct->options.maxProbes = numValidator(value);
+    if (traceroute_struct->options.maxProbes <= 0 || traceroute_struct->options.maxProbes > 10)
       ft_error_printf(1, "ft_traceroute: number of tries should be between 1 and 10\n");
     break;
   case 'w':

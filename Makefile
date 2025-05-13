@@ -11,9 +11,15 @@ SRC=ft_traceroute.c \
 	$(UTILS_FLDR)/helpers/ft_putNumber.c \
 	$(UTILS_FLDR)/helpers/printEmptyProbes.c \
 	$(UTILS_FLDR)/helpers/resolveHostName.c \
+	$(UTILS_FLDR)/helpers/ft_strncpy.c \
 	$(UTILS_FLDR)/pinger/pinger.c \
 	$(UTILS_FLDR)/pinger/sendPacket.c \
 	$(UTILS_FLDR)/pinger/receivePacket.c \
+	$(UTILS_FLDR)/probes/addProbe.c \
+	$(UTILS_FLDR)/probes/deleteProbe.c \
+	$(UTILS_FLDR)/probes/freeProbes.c \
+	$(UTILS_FLDR)/probes/handleReceivedProbe.c \
+	$(UTILS_FLDR)/probes/handleTimeOutedProbes.c \
 	# $(UTILS_FLDR)/utils2.c
 OBJ=$(SRC:.c=.o)
 INC=./includes

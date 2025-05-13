@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printEmptyProbes.c                                 :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 11:54:15 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/12 17:29:05 by ybel-hac         ###   ########.fr       */
+/*   Created: 2025/05/13 11:59:06 by ybel-hac          #+#    #+#             */
+/*   Updated: 2025/05/13 11:59:46 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_traceroute.h"
 
-void printEmptyProbes(int maxTTL, int probes)
+char *ft_strncpy(char *dest, const char *src, size_t n)
 {
-  for (int i = 0; i < maxTTL; i++)
+  size_t i;
+
+  i = 0;
+  while (i < n && src[i] != '\0')
   {
-    printf("%2d   ", i + 1);
-    for (int j = 0; j < probes; j++)
-      printf(" * ");
-    printf("\n");
+    dest[i] = src[i];
+    i++;
   }
+  while (i < n)
+  {
+    dest[i] = '\0';
+    i++;
+  }
+  return (dest);
 }

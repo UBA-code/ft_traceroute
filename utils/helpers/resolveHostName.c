@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   resolveHostNames.c                                 :+:      :+:    :+:   */
+/*   resolveHostName.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:30:48 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/07 16:30:54 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:00:31 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void resolveHostName(char *host, struct addrinfo **results, const char *type)
       ft_error(1, "unknown host", false);
     }
     free(port);
+    ft_strncpy(traceroute_struct->dstIp, inet_ntoa(((struct sockaddr_in *)(*results)->ai_addr)->sin_addr), INET_ADDRSTRLEN);
   }
   else if (!strcmp("icmp", type))
   {
