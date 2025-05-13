@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 09:46:42 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/12 17:33:10 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/13 10:04:53 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void pinger()
   char *destIp = NULL;
   fd_set readSet;
 
+  if (traceroute_struct->options.debugMode)
+  {
+    if (setsockopt(traceroute_struct->sendSocket, SOL_SOCKET, SO_DEBUG, &traceroute_struct->options.debugMode, sizeof(int)) < 0)
+      ft_error(1, "setsockopt failed", false);
+  }
   destIp = inet_ntoa(((struct sockaddr_in *)(traceroute_struct->results->ai_addr))->sin_addr);
   if (!destIp)
     ft_error(1, "inet_ntoa failed", false);

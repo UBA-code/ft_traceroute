@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:48:28 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/12 17:31:23 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/13 09:51:01 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_options
   int currentPort;
   int maxProbes;
   int waitTime;
+  bool debugMode;
 } t_options;
 
 typedef struct s_traceroute
