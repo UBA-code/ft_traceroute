@@ -6,7 +6,7 @@
 /*   By: ybel-hac <ybel-hac@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:57:02 by ybel-hac          #+#    #+#             */
-/*   Updated: 2025/05/13 12:00:36 by ybel-hac         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:51:50 by ybel-hac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,13 @@ void receivePacket(int sockFd)
     icmpHeader = (struct icmp *)&buffer[IP_HEADER_SIZE];
     udpHeader = (struct udphdr *)&buffer[IP_HEADER_SIZE + ICMP_HEADER_SIZE + IP_HEADER_SIZE];
 
-    uint16_t tmpCksum = icmpHeader->icmp_cksum;
-    icmpHeader->icmp_cksum = 0;
-    bool isValidCksum = calcCksum(icmpHeader, ntohs(ipHeader->ip_len) - (ipHeader->ip_hl) * 4) == tmpCksum;
-
     ft_strncpy(hopIp, inet_ntoa(ipHeader->ip_src), INET_ADDRSTRLEN);
 
     if (icmpHeader->icmp_type == ICMP_TIMXCEED && icmpHeader->icmp_code == ICMP_TIMXCEED_INTRANS && !strcmp(inet_ntoa(ipHeader->ip_dst), traceroute_struct->host) == 0)
     {
       handleReceivedProbe(traceroute_struct->probes, replyTime, hopIp, ntohs(udpHeader->uh_dport), false);
     }
-    else if (icmpHeader->icmp_type == ICMP_UNREACH && icmpHeader->icmp_code == ICMP_UNREACH_PORT && isValidCksum)
+    else if (icmpHeader->icmp_type == ICMP_UNREACH && icmpHeader->icmp_code == ICMP_UNREACH_PORT)
     {
       handleReceivedProbe(traceroute_struct->probes, replyTime, hopIp, ntohs(udpHeader->uh_dport), true);
       traceroute_struct->targetReached = true;
